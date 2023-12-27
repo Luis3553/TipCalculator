@@ -333,7 +333,7 @@
 
             if (currencyValue !== 0) {
                 try {
-                    const response = await fetch('/api/data');
+                    const response = await fetch('/api/rate');
                     if (!response.ok) {
                         throw new Error("It wasn't possible to connec to the data function.");
                     }
