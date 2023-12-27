@@ -333,7 +333,7 @@
 
             if (currencyValue !== 0) {
                 try {
-                    const response = await fetch('/api/rate');
+                    const response = await fetch('/.netlify/functions/rate');
                     if (!response.ok) {
                         throw new Error("It wasn't possible to connec to the data function.");
                     }
