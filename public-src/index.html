@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -82,7 +83,8 @@
         h3 {
             color: #9C6B3E;
             font-family: 'Aclonica';
-            margin-bottom: 5px;
+            font-size: 1.2rem;
+            -webkit-text-stroke: 0.5px black;
         }
 
         input[type="radio"],
@@ -97,6 +99,10 @@
             position: relative;
             cursor: pointer;
             transition: 0.5s;
+        }
+
+        input[type="checkbox"] {
+            width: 71px;
         }
 
         input[type="radio"]:hover,
@@ -182,31 +188,66 @@
             content: '$MXN';
         }
 
-        .number-box {
-            width: 330px;
-            height: 55px;
-            border-radius: 20px;
-            border: 3px solid #89613B;
-            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-            margin: 0 auto;
-            display: flex;
-            overflow: hidden;
+        #clp::after {
+            content: '$CLP';
         }
 
-        .reference {
+        #cop::after {
+            content: '$COP';
+        }
+
+        #cad::after {
+            content: '$CAD';
+        }
+
+        #usd::after {
+            content: '$USD';
+        }
+
+        .number-box {
+            width: 330px;
+            height: 48px;
+            column-gap: 10px;
+            margin: 0 auto;
+            display: flex;
+        }
+
+        .select-container {
+            position: relative;
+        }
+
+        select {
+            appearance: none;
             color: #FFF;
             font-family: 'Comic Neue';
-            font-size: 1.5rem;
-            padding: 0px 10px;
+            font-size: 2rem;
+            padding: 0px 0px 0px 12px;
             letter-spacing: -0.32px;
-            width: 70px;
+            width: 120px;
             height: 100%;
-            background-color: #D7D7D7;
+            background-color: #503924;
             display: flex;
             justify-content: center;
             align-items: center;
-            -webkit-text-stroke: 1px #000;
-            border-right: 1px solid #000;
+            -webkit-text-stroke: 0.5px #000;
+            border-radius: 10px;
+            border: 3px solid #89613B;
+            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+        }
+
+        select>option {
+            color: #3e3e3e;
+            background-color: whitesmoke;
+        }
+
+        #ico {
+            width: 20px;
+            height: 20px;
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
         }
 
         input[type="number"] {
@@ -217,6 +258,9 @@
             font-size: 2rem;
             padding: 0px 0px 0px 7px;
             color: #373737;
+            border-radius: 15px;
+            border: 3px solid #89613B;
+            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
         }
 
         .box-show-results {
@@ -229,7 +273,7 @@
             font-family: 'Comic Neue';
             font-size: 1.5rem;
             display: grid;
-            grid-template-columns: auto auto;
+            grid-template-columns: 55% 45%;
             grid-template-rows: 1fr 1fr auto;
             align-items: center;
             overflow: hidden;
@@ -250,6 +294,7 @@
         }
 
         input[type="text"] {
+            padding-left: 10px;
             border: none;
             height: fit-content;
             width: 150px;
@@ -274,7 +319,21 @@
         <div class="title">Tip Calculator</div>
         <h1>COST OF SERVICE</h1>
         <div class="number-box">
-            <div class="reference">$USD</div>
+            <div class="select-container">
+                <select name="select-rate" id="select-rate">
+                    <option value="USD">$USD</option>
+                    <option value="MXN">$MXN</option>
+                    <option value="EUR">$EUR</option>
+                    <option value="DOP">$DOP</option>
+                    <option value="COP">$COP</option>
+                    <option value="CLP">$CLP</option>
+                    <option value="CAD">$CAD</option>
+                    <option value="CHF">$CHF</option>
+                </select>
+                <div class="icon-container">
+                    <img src="./assets/chevron-abajo.png" alt="ico" id="ico">
+                </div>
+            </div>
             <input type="number" placeholder="$0" id="service">
         </div>
         <h2>SATISFACTION LEVEL</h2>
@@ -284,13 +343,17 @@
             <input type="radio" name="satisfaction" value="3" id="regular">
             <input type="radio" name="satisfaction" value="4" id="bad">
         </div>
-        <h2>OTHERS CURRENCYS</h2>
-        <h3>($USD DEFAULT)</h3>
+        <h2>CONVERT TO:</h2>
+        <h3>(OPTIONAL)</h3>
         <div class="check-buttons-box">
-            <input type="checkbox" name="currency" value="1" id="chf">
-            <input type="checkbox" name="currency" value="2" id="eur">
-            <input type="checkbox" name="currency" value="3" id="dop">
-            <input type="checkbox" name="currency" value="4" id="mxn">
+            <input type="checkbox" name="currency" value="CHF" id="chf">
+            <input type="checkbox" name="currency" value="EUR" id="eur">
+            <input type="checkbox" name="currency" value="DOP" id="dop">
+            <input type="checkbox" name="currency" value="MXN" id="mxn">
+            <input type="checkbox" name="currency" value="COP" id="cop">
+            <input type="checkbox" name="currency" value="USD" id="usd">
+            <input type="checkbox" name="currency" value="CLP" id="clp">
+            <input type="checkbox" name="currency" value="CAD" id="cad">
         </div>
         <button>CALCULATE</button>
         <div class="box-show-results">
@@ -310,74 +373,57 @@
         });
 
         document.querySelector('button').addEventListener('click', async () => {
-            var disccount, exchange, txt;
+            var disccount, exchange, cost;
+            const serviceRate = document.querySelector('#select-rate').value;
             const currencyOpt = (Array.from(currencyBttns).find(button => button.checked));
-            const currencyValue = currencyOpt ? currencyOpt.value : 0;
+            const currencyValue = currencyOpt ? currencyOpt.value : serviceRate;
             const satisfactionOpt = (Array.from(satisfactionBttns).find(button => button.checked)).value;
             const service = document.querySelector('#service').value;
 
             switch (satisfactionOpt) {
                 case '1':
-                    disccount = 0.15;
+                    disccount = 15;
                     break;
                 case '2':
-                    disccount = 0.10;
+                    disccount = 10;
                     break;
                 case '3':
-                    disccount = 0.07;
+                    disccount = 7;
                     break;
                 case '4':
-                    disccount = 0.05;
+                    disccount = 5;
                     break;
             }
 
-            if (currencyValue !== 0) {
+            if (currencyValue !== serviceRate) {
                 try {
                     const response = await fetch('/.netlify/functions/rate');
                     if (!response.ok) {
                         throw new Error("It wasn't possible to connec to the data function.");
                     }
                     const { rates } = await response.json();
-                    switch (currencyValue) {
-                        case '1':
-                            exchange = rates.CHF;
-                            txt = "CHF";
-                            break;
-                        case '2':
-                            exchange = rates.EUR;
-                            txt = "EUR";
-                            break;
-                        case '3':
-                            exchange = rates.DOP;
-                            txt = "DOP";
-                            break;
-                        case '4':
-                            exchange = rates.MXN;
-                            txt = "MXN";
-                            break;
-                    }
+                    cost = (service / rate[serviceRate]) * (rate[currencyValue]);
                 } catch (error) {
                     console.error('Error while trying to get data from API service. ', error);
                     return;
                 }
             } else {
-                txt = "USD";
-                exchange = 1;
+                cost = (service / 1);
             }
 
-            let cost = (service * exchange);
-            let tip = (cost * disccount);
+            let tip = (cost * disccount / 100);
             let total = (tip + cost);
 
             document.querySelector('.box-show-results').innerHTML = `<div class="title-results">Cost of service: </div>
     <input type="text" class="results" value="${cost.toFixed(2)}" readonly>
-    <div class="title-results">Tip to be paid: </div>
+    <div class="title-results">Tip to be paid(${disccount}%): </div>
     <input type="text" class="results" value="${tip.toFixed(2)}" readonly>
-    <div class="title-results top-border-title">TOTAL(${txt})</div>
+    <div class="title-results top-border-title">TOTAL(${currencyValue})</div>
     <div class="top-border">
         <input type="text" class="results" value="${total.toFixed(2)}" readonly>
     </div>`;
         });
     </script>
 </body>
+
 </html>
