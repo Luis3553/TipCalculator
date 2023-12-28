@@ -273,7 +273,7 @@
             font-family: 'Comic Neue';
             font-size: 1.5rem;
             display: grid;
-            grid-template-columns: 55% 45%;
+            grid-template-columns: 57% 43%;
             grid-template-rows: 1fr 1fr auto;
             align-items: center;
             overflow: hidden;
@@ -289,17 +289,22 @@
             align-items: center;
         }
 
-        .results {
+        textarea {
             color: #2A2A2A;
-        }
-
-        input[type="text"] {
             padding-left: 10px;
             border: none;
-            height: fit-content;
-            width: 150px;
+            height: 22px;
+            width: 133px;
             font-size: 1.5rem;
             font-family: 'Comic Neue';
+            resize: none;
+            scrollbar-width: none;
+            white-space: nowrap;
+            overflow-y: hidden;
+        }
+
+        textarea::-webkit-scrollbar{
+            display: none;
         }
 
         .top-border-title,
@@ -415,12 +420,12 @@
             let total = (tip + cost);
 
             document.querySelector('.box-show-results').innerHTML = `<div class="title-results">Cost of service: </div>
-    <input type="text" class="results" value="${cost.toFixed(2)}" readonly>
+    <textarea readonly>${cost.toFixed(2)}</textarea>
     <div class="title-results">Tip to be paid(${disccount}%): </div>
-    <input type="text" class="results" value="${tip.toFixed(2)}" readonly>
+    <textarea readonly>${tip.toFixed(2)}</textarea>
     <div class="title-results top-border-title">TOTAL(${currencyValue})</div>
     <div class="top-border">
-        <input type="text" class="results" value="${total.toFixed(2)}" readonly>
+        <textarea readonly>${total.toFixed(2)}</textarea>
     </div>`;
         });
     </script>
