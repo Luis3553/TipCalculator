@@ -11,3 +11,4 @@ HTML<br>
 CSS<br>
 JavaScript<br>
 <b><h2>--Vista Previa del Proyecto--</h2></b>
+![Capture](https://github.com/Luis3553/TipCalculator/assets/130417270/ceaab4e7-d2ce-4fa9-b307-99ea2c650826)
