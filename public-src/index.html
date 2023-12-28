@@ -343,10 +343,10 @@
         </div>
         <h2>SATISFACTION LEVEL</h2>
         <div class="radio-buttons-box">
-            <input type="radio" name="satisfaction" value="1" id="excelent">
-            <input type="radio" name="satisfaction" value="2" id="well" checked>
-            <input type="radio" name="satisfaction" value="3" id="regular">
-            <input type="radio" name="satisfaction" value="4" id="bad">
+            <input type="radio" name="satisfaction" value="15" id="excelent">
+            <input type="radio" name="satisfaction" value="10" id="well" checked>
+            <input type="radio" name="satisfaction" value="7" id="regular">
+            <input type="radio" name="satisfaction" value="5" id="bad">
         </div>
         <h2>CONVERT TO:</h2>
         <h3>(OPTIONAL)</h3>
@@ -385,21 +385,6 @@
             const satisfactionOpt = (Array.from(satisfactionBttns).find(button => button.checked)).value;
             const service = document.querySelector('#service').value;
 
-            switch (satisfactionOpt) {
-                case '1':
-                    disccount = 15;
-                    break;
-                case '2':
-                    disccount = 10;
-                    break;
-                case '3':
-                    disccount = 7;
-                    break;
-                case '4':
-                    disccount = 5;
-                    break;
-            }
-
             if (currencyValue !== serviceRate) {
                 try {
                     const response = await fetch('/.netlify/functions/rate');
@@ -416,12 +401,12 @@
                 cost = (service / 1);
             }
 
-            let tip = (cost * disccount / 100);
+            let tip = (cost * satisfactionOpt / 100);
             let total = (tip + cost);
 
             document.querySelector('.box-show-results').innerHTML = `<div class="title-results">Cost of service: </div>
     <textarea readonly>${cost.toFixed(2)}</textarea>
-    <div class="title-results">Tip to be paid(${disccount}%): </div>
+    <div class="title-results">Tip to be paid(${satisfactionOpt}%): </div>
     <textarea readonly>${tip.toFixed(2)}</textarea>
     <div class="title-results top-border-title">TOTAL(${currencyValue})</div>
     <div class="top-border">
