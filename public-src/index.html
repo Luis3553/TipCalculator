@@ -402,7 +402,7 @@
                         throw new Error("It wasn't possible to connec to the data function.");
                     }
                     const { rates } = await response.json();
-                    cost = (service / rate[serviceRate]) * (rate[currencyValue]);
+                    cost = (service / rates[serviceRate]) * (rates[currencyValue]);
                 } catch (error) {
                     console.error('Error while trying to get data from API service. ', error);
                     return;
