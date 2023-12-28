@@ -378,7 +378,7 @@
         });
 
         document.querySelector('button').addEventListener('click', async () => {
-            var disccount, exchange, cost;
+            var exchange, cost;
             const serviceRate = document.querySelector('#select-rate').value;
             const currencyOpt = (Array.from(currencyBttns).find(button => button.checked));
             const currencyValue = currencyOpt ? currencyOpt.value : serviceRate;
